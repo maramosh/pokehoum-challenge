@@ -2,7 +2,7 @@
   "name": "pokedex",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://maramosh.github.io/Pokehoum/",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^5.1.3",
