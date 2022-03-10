@@ -1,0 +1,23 @@
+.App {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: repeat;
+  background-color: #fff;
+  padding-top: 5rem;
+  min-height: 100vh;
+  font-family: "Nunito", sans-serif;
+}
+
+.navbar {
+  background-color: #fff !important;
+}
+
+.navbar-brand {
+  color: #263238 !important;
+}
+
+body {
+  background-color: transparent !important;
+}
+
+/*# sourceMappingURL=App.css.map */
