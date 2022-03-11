@@ -4,7 +4,7 @@ export default class Loading extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Getting Pokemon...</h1>
+        <p>Getting Pokemon...</p>
       </React.Fragment>
     );
   }
