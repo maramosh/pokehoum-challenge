@@ -17,6 +17,7 @@ export default class PokemonList extends Component {
     typeSelected: "All",
     abilitySelected: "none",
     searchResult: null,
+    count: "",
   };
 
   componentDidMount() {
@@ -49,6 +50,9 @@ export default class PokemonList extends Component {
           abilitySelected,
           filter
         );
+      } else if (currentOffset > this.state.count) {
+        this.setState({ currentOffset: 0, pageCounter: 1 });
+        this.fetchData(0, typeSelected, abilitySelected, filter);
       }
       this.fetchData(currentOffset, typeSelected, abilitySelected, filter);
     }

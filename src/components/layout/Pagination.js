@@ -21,6 +21,7 @@ const StyledRoundedButton = styled.button`
   border-color: #263238;
   background-color: #ff452b;
   padding: 0px 15px;
+  width: 50px;
   color: #fff;
   margin-left: 10px;
   cursor: default;
