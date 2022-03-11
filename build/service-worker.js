@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/pokehoum-challenge/precache-manifest.1b9639a2953ac427e3e716e4ad1e659d.js"
+  "/pokehoum-challenge/precache-manifest.1241efe56d089d09ee2c1a586a68cdbd.js"
 );
 
 workbox.clientsClaim();
