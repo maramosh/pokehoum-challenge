@@ -16,6 +16,7 @@ const StyledSectionTitle = styled.p`
   font-weight: bold;
   text-align: center;
   font-size: 1.5rem;
+  margin-bottom: 7px;
 `;
 
 const StyledButton = styled.button`
@@ -29,6 +30,15 @@ const StyledButton = styled.button`
     background-color: #ff452b;
     color: #fff;
   }
+`;
+
+const StyledAttributeTitle = styled.p`
+  margin-bottom: 8px;
+  font-weight: bold;
+`;
+
+const StyledAttribute = styled.p`
+  margin-bottom: 8px;
 `;
 
 const TYPE_COLORS = {
@@ -84,11 +94,9 @@ export default class Pokemon extends Component {
   async componentDidMount() {
     const { pokemonIndex } = this.props.match.params;
 
-    // Urls para obtener la información de los Pokemons, usaremos 2 end-points
     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
     const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`;
 
-    // Obtención de la información de los Pokemons
     const pokemonRes = await Axios.get(pokemonUrl);
 
     const name = pokemonRes.data.name;
@@ -96,7 +104,6 @@ export default class Pokemon extends Component {
 
     let { hp, attack, defense, speed, specialAttack, specialDefense } = "";
 
-    // Acá asignamos los valores de las Stats a partir del response
     pokemonRes.data.stats.map((stat) => {
       switch (stat.stat.name) {
         case "hp":
@@ -156,8 +163,6 @@ export default class Pokemon extends Component {
           .join(" ")}`;
       })
       .join(", ");
-
-    // Descripción del Pokemon, y otros datos, estos vienen de otro end-point
 
     await Axios.get(pokemonSpeciesUrl).then((res) => {
       let description = "";
@@ -220,11 +225,10 @@ export default class Pokemon extends Component {
     return (
       <div className="col">
         <div className="card">
-          {/*Sección header del detail, se incluye el # del Pokemon y su(s) tipos*/}
           <div className="card-header pb-0">
             <div className="row">
               <div className="col-5">
-                <StyledTitle>{`Pokemon #${
+                <StyledTitle className="mb-2">{`Pokemon #${
                   this.state.pokemonIndex
                 }`}</StyledTitle>
               </div>
@@ -256,6 +260,7 @@ export default class Pokemon extends Component {
                 <Sprite
                   src={this.state.imageUrl}
                   className="card-img-top rounded mx-auto"
+                  alt={`Imagen del pokemon ${this.state.name}`}
                 />
               </div>
               <div className="col-md-9">
@@ -282,6 +287,7 @@ export default class Pokemon extends Component {
                         aria-valuenow="25"
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.stats.hp}
                       >
                         <small>{this.state.stats.hp}</small>
                       </div>
@@ -304,6 +310,7 @@ export default class Pokemon extends Component {
                         aria-valuenow="25"
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.stats.attack}
                       >
                         <small>{this.state.stats.attack}</small>
                       </div>
@@ -326,6 +333,7 @@ export default class Pokemon extends Component {
                         aria-valuenow="25"
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.stats.defense}
                       >
                         <small>{this.state.stats.defense}</small>
                       </div>
@@ -348,6 +356,7 @@ export default class Pokemon extends Component {
                         aria-valuenow="25"
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.stats.speed}
                       >
                         <small>{this.state.stats.speed}</small>
                       </div>
@@ -370,6 +379,7 @@ export default class Pokemon extends Component {
                         aria-valuenow={this.state.stats.specialAttack}
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.stats.specialAttack}
                       >
                         <small>{this.state.stats.specialAttack}</small>
                       </div>
@@ -392,6 +402,7 @@ export default class Pokemon extends Component {
                         aria-valuenow={this.state.stats.specialDefense}
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.stats.specialDefense}
                       >
                         <small>{this.state.stats.specialDefense}</small>
                       </div>
@@ -406,7 +417,7 @@ export default class Pokemon extends Component {
               </div>
             </div>
           </div>
-          <hr />
+          <hr className="my-1" />
           <div className="card-body">
             <StyledSectionTitle class="card-title text-center">
               Profile
@@ -415,27 +426,39 @@ export default class Pokemon extends Component {
               <div className="col-md-6">
                 <div className="row">
                   <div className="col-6">
-                    <h6 className="float-right">Height:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      Height:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-left">
+                    <StyledAttribute className="float-left">
                       {this.state.height} metro(s).
-                    </h6>
+                    </StyledAttribute>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-right">Weight:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      Weight:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-left">{this.state.weight} kg.</h6>
+                    <StyledAttribute className="float-left">
+                      {this.state.weight} kg.
+                    </StyledAttribute>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-right">Catch Rate:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      Catch Rate:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-left">{this.state.catchRate}%</h6>
+                    <StyledAttribute className="float-left">
+                      {this.state.catchRate}%
+                    </StyledAttribute>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-right">Gender Ratio:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      Gender Ratio:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
                     <div class="progress">
@@ -449,6 +472,7 @@ export default class Pokemon extends Component {
                         aria-valuenow="15"
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.genderRatioFemale}
                       >
                         <small>{this.state.genderRatioFemale}</small>
                       </div>
@@ -462,6 +486,7 @@ export default class Pokemon extends Component {
                         aria-valuenow="30"
                         aria-valuemin="0"
                         aria-valuemax="100"
+                        aria-label={this.state.genderRatioMale}
                       >
                         <small>{this.state.genderRatioMale}</small>
                       </div>
@@ -472,28 +497,44 @@ export default class Pokemon extends Component {
               <div className="col-md-6">
                 <div className="row">
                   <div className="col-6">
-                    <h6 className="float-right">Egg Groups:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      Egg Groups:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-left">{this.state.eggGroups} </h6>
+                    <StyledAttribute className="float-left">
+                      {this.state.eggGroups}{" "}
+                    </StyledAttribute>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-right">Hatch Steps:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      Hatch Steps:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-left">{this.state.hatchSteps}</h6>
+                    <StyledAttribute className="float-left">
+                      {this.state.hatchSteps}
+                    </StyledAttribute>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-right">Abilities:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      Abilities:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-left">{this.state.abilities}</h6>
+                    <StyledAttribute className="float-left">
+                      {this.state.abilities}
+                    </StyledAttribute>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-right">EVs:</h6>
+                    <StyledAttributeTitle className="float-right">
+                      EVs:
+                    </StyledAttributeTitle>
                   </div>
                   <div className="col-6">
-                    <h6 className="float-left">{this.state.evs}</h6>
+                    <StyledAttribute className="float-left">
+                      {this.state.evs}
+                    </StyledAttribute>
                   </div>
                 </div>
               </div>

@@ -9,7 +9,7 @@ export default class PokemonList extends Component {
   state = {
     pokemon: null,
     currentOffset: 0,
-    limit: 52,
+    limit: 20,
     pageCounter: 1,
     types: null,
     abilities: null,
@@ -56,34 +56,42 @@ export default class PokemonList extends Component {
 
   fetchData = async (offset = 0, typeSelected, abilitySelected, filter) => {
     const url = `https://pokeapi.co/api/v2/pokemon`;
+    const allPokemons = await this.searchPokemonsFiltered(filter);
     let params = {
       offset: offset,
-      limit: 52,
+      limit: 20,
     };
     let res = "";
     if (typeSelected === "All" && abilitySelected === "none") {
       res = await axios.get(url, { params });
       const { results, count } = res.data;
-      const finalArray = results
-        .filter(function(obj) {
-          if (filter === "") {
-            return obj;
-          } else if (obj.name.toLowerCase().includes(filter.toLowerCase())) {
-            return obj;
-          }
-          return null;
-        })
-        .map(function(obj) {
-          let pokemon = {
-            name: obj.name,
-            url: obj.url,
-          };
-          return pokemon;
+      if (filter !== "") {
+        this.setState({
+          pokemon: allPokemons,
+          count,
         });
-      this.setState({
-        pokemon: finalArray,
-        count,
-      });
+      } else {
+        const finalArray = results
+          .filter(function(obj) {
+            if (filter === "") {
+              return obj;
+            } else if (obj.name.toLowerCase().includes(filter.toLowerCase())) {
+              return obj;
+            }
+            return null;
+          })
+          .map(function(obj) {
+            let pokemon = {
+              name: obj.name,
+              url: obj.url,
+            };
+            return pokemon;
+          });
+        this.setState({
+          pokemon: finalArray,
+          count,
+        });
+      }
     } else if (typeSelected !== "All" && abilitySelected === "none") {
       res = await axios.get(`https://pokeapi.co/api/v2/type/${typeSelected}`);
       const { pokemon } = res.data;
@@ -172,10 +180,32 @@ export default class PokemonList extends Component {
     }
   };
 
+  searchPokemonsFiltered = async (filter) => {
+    const res = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon?limit=${this.state.count}&offset=0`
+    );
+    const { results } = res.data;
+    const finalArray = results
+      .filter(function(obj) {
+        if (obj.name.toLowerCase().includes(filter.toLowerCase())) {
+          return obj;
+        }
+        return null;
+      })
+      .map(function(obj) {
+        let pokemon = {
+          name: obj.name,
+          url: obj.url,
+        };
+        return pokemon;
+      });
+    return finalArray;
+  };
+
   increment = () => {
     const { currentOffset, pageCounter } = this.state;
     this.setState({
-      currentOffset: currentOffset + 52,
+      currentOffset: currentOffset + 20,
       pageCounter: pageCounter + 1,
     });
   };
@@ -183,7 +213,7 @@ export default class PokemonList extends Component {
   decrement = () => {
     const { currentOffset, pageCounter } = this.state;
     this.setState({
-      currentOffset: currentOffset - 52,
+      currentOffset: currentOffset - 20,
       pageCounter: pageCounter - 1,
     });
   };
@@ -233,16 +263,15 @@ export default class PokemonList extends Component {
                   className="rounded-pill w-100"
                 />
               </Container>
-              <div className="d-flex mt-3">
+              <div className="d-flex flex-row mt-2">
                 <Container className="d-flex flex-column justify-content-center align-items-center">
                   <label className="d-flex align-items-center flex-wrap">
-                    Filter by type!
+                    Type filter
                   </label>
                   <Form.Select
-                    className="w-100"
+                    className="w-100 rounded-pill"
                     onChange={this._handleTypeChange}
                     value={this.state.typeSelected}
-                    defaultValue={this.state.typeSelected}
                   >
                     <option value="All">All</option>
                     {types ? (
@@ -265,13 +294,12 @@ export default class PokemonList extends Component {
                 </Container>
                 <Container className="d-flex flex-column justify-content-center align-items-center">
                   <label className="d-flex align-items-center">
-                    Filter by abilities!
+                    Ability filter
                   </label>
                   <Form.Select
-                    className="w-100"
+                    className="w-100 rounded-pill"
                     onChange={this._handleAbilityChange}
                     value={this.state.abilitySelected}
-                    defaultValue={this.state.abilitySelected}
                   >
                     <option value="none">None</option>
                     {abilities ? (
@@ -314,11 +342,15 @@ export default class PokemonList extends Component {
         <div className="mb-3">
           <div className="row">
             <Container className="d-flex justify-content-center">
-              <Pagination
-                increment={this.increment}
-                decrement={this.decrement}
-                page={pageCounter}
-              />
+              {this.state.filter === "" &&
+              this.state.typeSelected === "All" &&
+              this.state.abilitySelected === "none" ? (
+                <Pagination
+                  increment={this.increment}
+                  decrement={this.decrement}
+                  page={pageCounter}
+                />
+              ) : null}
             </Container>
           </div>
         </div>
