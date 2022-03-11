@@ -167,7 +167,7 @@ export default class Pokemon extends Component {
     await Axios.get(pokemonSpeciesUrl).then((res) => {
       let description = "";
       res.data.flavor_text_entries.some((flavor) => {
-        if (flavor.language.name === "es") {
+        if (flavor.language.name === "en") {
           description = flavor.flavor_text;
         }
         return null;
@@ -273,7 +273,7 @@ export default class Pokemon extends Component {
                 </h4>
                 <div className="row align-items-center">
                   <div className={`col-12 col-md-${this.state.statTitleWidth}`}>
-                    Puntos de Salud
+                    HP
                   </div>
                   <div className={`col-12 col-md-${this.state.statBarWidth}`}>
                     <div className="progress">
@@ -296,7 +296,7 @@ export default class Pokemon extends Component {
                 </div>
                 <div className="row align-items-center">
                   <div className={`col-12 col-md-${this.state.statTitleWidth}`}>
-                    Ataque
+                    Attack
                   </div>
                   <div className={`col-12 col-md-${this.state.statBarWidth}`}>
                     <div className="progress">
@@ -319,7 +319,7 @@ export default class Pokemon extends Component {
                 </div>
                 <div className="row align-items-center">
                   <div className={`col-12 col-md-${this.state.statTitleWidth}`}>
-                    Defensa
+                    Defense
                   </div>
                   <div className={`col-12 col-md-${this.state.statBarWidth}`}>
                     <div className="progress">
@@ -342,7 +342,7 @@ export default class Pokemon extends Component {
                 </div>
                 <div className="row align-items-center">
                   <div className={`col-12 col-md-${this.state.statTitleWidth}`}>
-                    Velocidad
+                    Speed
                   </div>
                   <div className={`col-12 col-md-${this.state.statBarWidth}`}>
                     <div className="progress">
@@ -365,7 +365,7 @@ export default class Pokemon extends Component {
                 </div>
                 <div className="row align-items-center">
                   <div className={`col-12 col-md-${this.state.statTitleWidth}`}>
-                    Sp Atck
+                    Sp Attck
                   </div>
                   <div className={`col-12 col-md-${this.state.statBarWidth}`}>
                     <div className="progress">
@@ -432,7 +432,7 @@ export default class Pokemon extends Component {
                   </div>
                   <div className="col-6">
                     <StyledAttribute className="float-left">
-                      {this.state.height} metro(s).
+                      {this.state.height} metter(s).
                     </StyledAttribute>
                   </div>
                   <div className="col-6">
@@ -542,7 +542,7 @@ export default class Pokemon extends Component {
           </div>
           <div class="card-footer text-muted d-flex justify-content-center">
             <Link to="/">
-              <StyledButton>Volver</StyledButton>
+              <StyledButton>Back</StyledButton>
             </Link>
           </div>
         </div>
