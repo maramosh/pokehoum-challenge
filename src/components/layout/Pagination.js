@@ -29,11 +29,11 @@ const StyledRoundedButton = styled.button`
 const Pagination = ({ increment, decrement, page }) => {
   return (
     <React.Fragment>
-      <StyledButton onClick={decrement}>Anterior</StyledButton>
+      <StyledButton onClick={decrement}>Previous</StyledButton>
       <StyledRoundedButton className="rounded-circle">
         {page}
       </StyledRoundedButton>
-      <StyledButton onClick={increment}>Siguiente</StyledButton>
+      <StyledButton onClick={increment}>Next</StyledButton>
     </React.Fragment>
   );
 };

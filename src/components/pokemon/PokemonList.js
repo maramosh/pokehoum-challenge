@@ -113,7 +113,6 @@ export default class PokemonList extends Component {
           };
           return pokemon;
         });
-      console.log(finalArray);
       this.setState({
         pokemon: finalArray,
       });
@@ -166,14 +165,11 @@ export default class PokemonList extends Component {
         };
         return pokemon;
       });
-      console.log(typeArray);
-      console.log(abilityArray);
 
       let finalArray = typeArray.filter((o1) =>
         abilityArray.some((o2) => o1.name === o2.name)
       );
 
-      console.log(finalArray);
       this.setState({
         pokemon: finalArray,
       });
